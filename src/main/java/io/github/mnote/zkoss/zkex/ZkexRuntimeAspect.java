@@ -1,4 +1,4 @@
-package io.github.mnote.zkex;
+package io.github.mnote.zkoss.zkex;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

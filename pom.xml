@@ -72,6 +72,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
+            <version>2.5.4</version>
+        </dependency>
+        <dependency>
             <groupId>io.keikai</groupId>
             <artifactId>keikai-ex</artifactId>
             <version>${keikai-ex.version}</version>
@@ -110,11 +115,13 @@
             <version>${zkcharts.version}</version>
         </dependency>
 
+        <!--
         <dependency>
             <groupId>org.zkoss.theme</groupId>
             <artifactId>iceblue_c</artifactId>
             <version>${zk.version}</version>
         </dependency>
+        -->
         <dependency>
             <groupId>org.zkoss.zk</groupId>
             <artifactId>zkplus</artifactId>

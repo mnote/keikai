@@ -1,4 +1,4 @@
-package io.github.mnote.zkex;
+package io.github.mnote.zkoss.zkcharts;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -10,14 +10,14 @@ import org.slf4j.LoggerFactory;
 
 @Aspect
 @SuppressWarnings("SpringAopErrorsInspection")
-public class ZkexRuntimeLicenseManagerAspect {
+public class ZkchartsRuntimeLicenseManagerAspect {
 
-    private static final Logger logger = LoggerFactory.getLogger(ZkexRuntimeLicenseManagerAspect.class);
+    private static final Logger logger = LoggerFactory.getLogger(ZkchartsRuntimeLicenseManagerAspect.class);
 
-    @Pointcut(value="execution(void org.zkoss.zkex.rt.RuntimeLicenseManager.startScheduler())")
+    @Pointcut(value="execution(void org.zkoss.chart.rt.RuntimeLicenseManager.startScheduler())")
     public void pointcut1(){}
 
-    @Pointcut(value="execution(void org.zkoss.zkex.rt.RuntimeLicenseManager.check())")
+    @Pointcut(value="execution(void org.zkoss.chart.rt.RuntimeLicenseManager.check())")
     public void pointcut2(){}
 
 
@@ -41,7 +41,7 @@ public class ZkexRuntimeLicenseManagerAspect {
 
 
     static {
-        Reflect.on("org.zkoss.zkex.rt.RuntimeLicenseManager").set("HOUR", 365*24*60*60*1000);
+        Reflect.onClass("org.zkoss.chart.rt.RuntimeLicenseManager").set("HOUR", 365*24*60*60*1000);
     }
 
     /** Utility method to get StackTraceElement of caller */

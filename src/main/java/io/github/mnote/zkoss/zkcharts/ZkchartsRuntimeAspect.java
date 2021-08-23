@@ -1,4 +1,4 @@
-package io.github.mnote.zkcharts;
+package io.github.mnote.zkoss.zkcharts;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

@@ -1,4 +1,4 @@
-package io.github.mnote.keikai;
+package io.github.mnote.zkoss.zss;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -10,14 +10,14 @@ import org.slf4j.LoggerFactory;
 
 @Aspect
 @SuppressWarnings("SpringAopErrorsInspection")
-public class KeikaiexRuntimeLicenseManagerAspect {
+public class ZssexRuntimeLicenseManagerAspect {
 
-    private static final Logger logger = LoggerFactory.getLogger(KeikaiexRuntimeLicenseManagerAspect.class);
+    private static final Logger logger = LoggerFactory.getLogger(ZssexRuntimeLicenseManagerAspect.class);
 
-    @Pointcut(value="execution(void io.keikaiex.rt.RuntimeLicenseManager.startScheduler())")
+    @Pointcut(value="execution(void org.zkoss.zssex.rt.RuntimeLicenseManager.startScheduler())")
     public void pointcut1(){}
 
-    @Pointcut(value="execution(void io.keikaiex.rt.RuntimeLicenseManager.check())")
+    @Pointcut(value="execution(void org.zkoss.zssex.rt.RuntimeLicenseManager.check())")
     public void pointcut2(){}
 
 
@@ -41,7 +41,7 @@ public class KeikaiexRuntimeLicenseManagerAspect {
 
 
     static {
-        Reflect.onClass("io.keikaiex.rt.RuntimeLicenseManager").set("HOUR", 365*24*60*60*1000);
+        Reflect.onClass("org.zkoss.zssex.rt.RuntimeLicenseManager").set("HOUR", 365*24*60*60*1000);
     }
 
     /** Utility method to get StackTraceElement of caller */

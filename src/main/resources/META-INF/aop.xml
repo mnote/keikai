@@ -14,11 +14,11 @@
         -->
 
         <!-- the weaving need to be enabled also for aspect classes -->
-        <include within="io.github.mnote.zkex.*"/>
-        <include within="io.github.mnote.zkcharts.*"/>
-        <include within="io.github.mnote.keikai.*"/>
+        <include within="io.github.mnote.zkoss.zkex.*"/>
+        <include within="io.github.mnote.zkoss.zkcharts.*"/>
+        <include within="io.github.mnote.zkoss.keikai.*"/>
         <!--
-        <include within="io.github.mnote.zss.*"/>
+        <include within="io.github.mnote.zkoss.hello.zss.*"/>
         -->
 
     </weaver>
