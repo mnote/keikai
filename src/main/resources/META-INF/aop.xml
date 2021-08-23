@@ -1,0 +1,39 @@
+<!DOCTYPE aspectj PUBLIC "-//AspectJ//DTD//EN" "http://www.eclipse.org/aspectj/dtd/aspectj.dtd">
+<aspectj>
+
+    <!-- -verbose -debug -Xset:weaveJavaxPackages=true -->
+    <weaver options="-showWeaveInfo -verbose">
+
+        <!-- only weave classes in application-specific packages -->
+
+        <include within="org.zkoss.zkex.rt.*"/>
+        <include within="org.zkoss.chart.rt.*"/>
+        <include within="io.keikaiex.rt.*"/>
+        <!--
+        <include within="org.zkoss.zssex.rt.*"/>
+        -->
+
+        <!-- the weaving need to be enabled also for aspect classes -->
+        <include within="io.github.mnote.zkex.*"/>
+        <include within="io.github.mnote.zkcharts.*"/>
+        <include within="io.github.mnote.keikai.*"/>
+        <!--
+        <include within="io.github.mnote.zss.*"/>
+        -->
+
+    </weaver>
+
+    <aspects>
+
+        <!--
+        <aspect name="io.github.ZkchartsRuntimeAspect"/>
+        <aspect name="io.github.ZkexRuntimeAspect"/>
+        <aspect name="io.github.ZssexRuntimeAspect"/>
+        <aspect name="io.github.ZkchartsRuntimeAspect"/>
+        <aspect name="io.github.ZkexRuntimeLicenseManagerAspect"/>
+        <aspect name="io.github.ZssexRuntimeLicenseManagerAspect"/>
+        -->
+
+    </aspects>
+
+</aspectj>

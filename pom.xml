@@ -1,14 +1,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>io.keikai</groupId>
-    <artifactId>tutorial</artifactId>
-    <version>5.0.0</version>
+    <groupId>io.github.mnote.keikai</groupId>
+    <artifactId>keikai</artifactId>
+    <version>5.8.0.FL.20210823-Eval</version>
     <properties>
+        <zk.version>9.6.1.FL.20210818-Eval</zk.version>
+        <zkcharts.version>8.0.0.0-FL-20210810-Eval</zkcharts.version>
         <keikai.version>${project.version}</keikai.version>
-        <keikai-ex.version>5.5.0-Eval</keikai-ex.version>
+        <keikai-ex.version>5.8.0.FL.20210823-Eval</keikai-ex.version>
         <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
         <packname>-${project.version}-FL-${maven.build.timestamp}</packname>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <aspectj.version>1.9.6</aspectj.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
@@ -23,6 +27,10 @@
         </license>
     </licenses>
     <repositories>
+        <repository>
+            <id>ali-maven</id>
+            <url>http://maven.aliyun.com/nexus/content/groups/public</url>
+        </repository>
         <repository>
             <id>Keikai EVAL</id>
             <name>Keikai Evaluation Repository</name>
@@ -45,11 +53,40 @@
             <url>https://mavensync.zkoss.org/maven2</url>
         </repository>
     </repositories>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.zkoss.zk</groupId>
+                <artifactId>zkex</artifactId>
+                <version>${zk.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>net.sf.jasperreports</groupId>
+                        <artifactId>jasperreports</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <dependency>
             <groupId>io.keikai</groupId>
             <artifactId>keikai-ex</artifactId>
             <version>${keikai-ex.version}</version>
+            <exclusions>
+                <!-- avoid using unnecessary jar, ZK-4860 -->
+                <exclusion>
+                    <groupId>net.sf.jasperreports</groupId>
+                    <artifactId>jasperreports</artifactId>
+                </exclusion>
+                <!-- to include different version of ZK, required to exclude default one -->
+                <exclusion>
+                    <groupId>org.zkoss.zk</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- to try the OSE version replace the above with the below dependency
              (don't use both at the same time) -->
@@ -60,10 +97,243 @@
             <version>${keikai.version}</version>
         </dependency>
         -->
+
+        <dependency>
+            <groupId>io.keikai</groupId>
+            <artifactId>keikai-jsp</artifactId>
+            <version>${keikai-ex.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.zkoss.chart</groupId>
+            <artifactId>zkcharts</artifactId>
+            <version>${zkcharts.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.zkoss.theme</groupId>
+            <artifactId>iceblue_c</artifactId>
+            <version>${zk.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.zkoss.zk</groupId>
+            <artifactId>zkplus</artifactId>
+            <version>${zk.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.zkoss.zk</groupId>
+            <artifactId>zkmax</artifactId>
+            <version>${zk.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.zkoss.zk</groupId>
+            <artifactId>zuti</artifactId>
+            <version>${zk.version}</version>
+        </dependency>
+
+        <!-- aspectj the classes and aspects along with aspectjrt -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>${aspectj.version}</version>
+        </dependency>
+
+        <!-- introduce advice to Java class at load time -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.version}</version>
+        </dependency>
+
+        <!-- ajc -->
+        <!--
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjtools</artifactId>
+            <version>${aspectj.version}</version>
+        </dependency>
+        -->
+
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>joor-java-6</artifactId>
+            <version>0.9.11</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.2</version>
+        </dependency>
+
     </dependencies>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>ali-maven</id>
+            <url>http://maven.aliyun.com/nexus/content/groups/public</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>zkmaven</id>
+            <name>ZK Maven Plugin Repository</name>
+            <url>http://mavensync.zkoss.org/maven2/</url>
+        </pluginRepository>
+    </pluginRepositories>
     <build>
         <finalName>${project.artifactId}</finalName>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.2</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.2.2</version>
+                <configuration>
+                    <resourceEncoding>UTF-8</resourceEncoding>
+                    <packagingExcludes>
+                        WEB-INF/classes/metainfo/**,
+                        WEB-INF/classes/builddef.lst,
+                        WEB-INF/classes/*.store,
+                        WEB-INF/classes/web/**,
+
+                        WEB-INF/classes/org/zkoss/chart/impl/**,
+                        WEB-INF/classes/org/zkoss/chart/init/**,
+                        WEB-INF/classes/org/zkoss/chart/lic/**,
+                        WEB-INF/classes/org/zkoss/chart/model/**,
+                        WEB-INF/classes/org/zkoss/chart/options3D/**,
+                        WEB-INF/classes/org/zkoss/chart/plotOptions/**,
+                        WEB-INF/classes/org/zkoss/chart/util/**,
+                        WEB-INF/classes/org/zkoss/chart/*.class,
+                        WEB-INF/classes/org/zkoss/chart/rt/RuntimeInfo.class,
+                        %regex[WEB-INF/classes/org/zkoss/chart/rt/(?!Runtime).*.class],
+
+                        WEB-INF/classes/org/zkoss/zk/**,
+
+                        WEB-INF/classes/org/zkoss/zkex/bind/**,
+                        WEB-INF/classes/org/zkoss/zkex/init/**,
+                        WEB-INF/classes/org/zkoss/zkex/license/**,
+                        WEB-INF/classes/org/zkoss/zkex/theme/**,
+                        WEB-INF/classes/org/zkoss/zkex/ui/**,
+                        WEB-INF/classes/org/zkoss/zkex/util/**,
+                        WEB-INF/classes/org/zkoss/zkex/xml/**,
+                        WEB-INF/classes/org/zkoss/zkex/zul/**,
+                        WEB-INF/classes/org/zkoss/zkex/*.class,
+                        %regex[WEB-INF/classes/org/zkoss/zkex/rt/(?!Runtime).*.class],
+
+                        WEB-INF/classes/io/keikaiex/api/**,
+                        WEB-INF/classes/io/keikaiex/app/**,
+                        WEB-INF/classes/io/keikaiex/formula/**,
+                        WEB-INF/classes/io/keikaiex/init/**,
+                        WEB-INF/classes/io/keikaiex/license/**,
+                        WEB-INF/classes/io/keikaiex/model/**,
+                        WEB-INF/classes/io/keikaiex/ui/**,
+                        WEB-INF/classes/io/keikaiex/util/**,
+                        WEB-INF/classes/io/keikaiex/xml/**,
+                        WEB-INF/classes/io/keikaiex/*.class,
+                        WEB-INF/classes/io/keikaiex/rt/RuntimeInfo.class,
+                        %regex[WEB-INF/classes/io/keikaiex/rt/(?!Runtime).*.class]
+
+                        <!--
+                        WEB-INF/classes/org/zkoss/zssex/api/**,
+                        WEB-INF/classes/org/zkoss/zssex/app/**,
+                        WEB-INF/classes/org/zkoss/zssex/formula/**,
+                        WEB-INF/classes/org/zkoss/zssex/init/**,
+                        WEB-INF/classes/org/zkoss/zssex/license/**,
+                        WEB-INF/classes/org/zkoss/zssex/model/**,
+                        WEB-INF/classes/org/zkoss/zssex/ui/**,
+                        WEB-INF/classes/org/zkoss/zssex/util/**,
+                        WEB-INF/classes/org/zkoss/zssex/xml/**,
+                        WEB-INF/classes/org/zkoss/zssex/*.class,
+                        WEB-INF/classes/org/zkoss/zssex/rt/RuntimeInfo.class,
+                        %regex[WEB-INF/classes/org/zkoss/zssex/rt/(?!Runtime).*.class]
+                        -->
+                    </packagingExcludes>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>aspectj-maven-plugin</artifactId>
+                <version>1.11</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjtools</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <showWeaveInfo>true</showWeaveInfo>
+                    <verbose>true</verbose>
+
+                    <sources/>
+                    <forceAjcCompile>true</forceAjcCompile>
+
+                    <complianceLevel>${maven.compiler.target}</complianceLevel>
+
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+
+                    <weaveDirectories>
+                        <weaveDirectory>${project.build.directory}/classes</weaveDirectory>
+                    </weaveDirectories>
+
+                    <!-- Weave third party dependency -->
+                    <!---->
+                    <weaveDependencies>
+                        <!--
+                        <weaveDependency>
+                            <groupId>org.zkoss.zss</groupId>
+                            <artifactId>zssex</artifactId>
+                        </weaveDependency>
+                        -->
+                        <weaveDependency>
+                            <groupId>io.keikai</groupId>
+                            <artifactId>keikai-ex</artifactId>
+                        </weaveDependency>
+                        <weaveDependency>
+                            <groupId>org.zkoss.chart</groupId>
+                            <artifactId>zkcharts</artifactId>
+                        </weaveDependency>
+                        <weaveDependency>
+                            <groupId>org.zkoss.zk</groupId>
+                            <artifactId>zkex</artifactId>
+                        </weaveDependency>
+                    </weaveDependencies>
+
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.1</version>
+                <configuration>
+                    <outputDirectory>${project.basedir}/src/main/webapp/WEB-INF/lib</outputDirectory>
+                    <excludeTransitive>false</excludeTransitive>
+                    <stripVersion>false</stripVersion>
+                    <overWriteReleases>true</overWriteReleases>
+                    <overWriteSnapshots>true</overWriteSnapshots>
+                    <excludeArtifactIds>junit,servlet-api,jsp-api,el-api</excludeArtifactIds>
+                </configuration>
+            </plugin>
+
             <!-- Run with Jetty. 4G heap size is allocated by default. -->
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
@@ -75,6 +345,10 @@
                         <contextPath>/${project.artifactId}</contextPath>
                     </webAppConfig>
                     <scanIntervalSeconds>5</scanIntervalSeconds>
+                    <!-- jetty:run-forked -->
+                    <jvmArgs>
+                        -javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
+                    </jvmArgs>
                 </configuration>
             </plugin>
         </plugins>

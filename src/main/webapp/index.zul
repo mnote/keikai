@@ -2,4 +2,5 @@
     <h:h1>Keikai Examples</h:h1>
     <h:h2> <h:a href="editor.zul">Online Editor</h:a>: Load your first Keikai spreadsheet for online editing.</h:h2>
     <h:h2> <h:a href="database.zul">Work with a Database</h:a>: Populate data from DB and save it back.</h:h2>
+    <h:h2> <h:a href="index.jsp">JSP</h:a>: Keikai with JSP.</h:h2>
 </zk>
