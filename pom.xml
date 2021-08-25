@@ -3,12 +3,12 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.mnote.keikai</groupId>
     <artifactId>keikai</artifactId>
-    <version>5.8.0.FL.20210823-Eval</version>
+    <version>5.7.0-Eval</version>
     <properties>
-        <zk.version>9.6.1.FL.20210818-Eval</zk.version>
-        <zkcharts.version>8.0.0.0-FL-20210810-Eval</zkcharts.version>
+        <zk.version>9.0.1.2-Eval</zk.version><!--9.6.0-Eval-->
+        <zkcharts.version>7.2.1.1-Eval</zkcharts.version><!--7.2.2.0-Eval-->
         <keikai.version>${project.version}</keikai.version>
-        <keikai-ex.version>5.8.0.FL.20210823-Eval</keikai-ex.version>
+        <keikai-ex.version>${project.version}</keikai-ex.version>
         <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
         <packname>-${project.version}-FL-${maven.build.timestamp}</packname>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -54,6 +54,7 @@
         </repository>
     </repositories>
 
+    <!--
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -69,6 +70,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+    -->
 
     <dependencies>
         <dependency>
@@ -87,10 +89,12 @@
                     <artifactId>jasperreports</artifactId>
                 </exclusion>
                 <!-- to include different version of ZK, required to exclude default one -->
+                <!--
                 <exclusion>
                     <groupId>org.zkoss.zk</groupId>
                     <artifactId>*</artifactId>
                 </exclusion>
+                -->
             </exclusions>
         </dependency>
         <!-- to try the OSE version replace the above with the below dependency
@@ -109,19 +113,23 @@
             <version>${keikai-ex.version}</version>
         </dependency>
 
+        <!--
         <dependency>
             <groupId>org.zkoss.chart</groupId>
             <artifactId>zkcharts</artifactId>
             <version>${zkcharts.version}</version>
         </dependency>
+        -->
 
-        <!--
+        <!-- fix zk 8.6 big icon issue-->
+        <!-- fix keikai scroll issue-->
         <dependency>
             <groupId>org.zkoss.theme</groupId>
             <artifactId>iceblue_c</artifactId>
             <version>${zk.version}</version>
         </dependency>
-        -->
+
+        <!--
         <dependency>
             <groupId>org.zkoss.zk</groupId>
             <artifactId>zkplus</artifactId>
@@ -138,6 +146,7 @@
             <artifactId>zuti</artifactId>
             <version>${zk.version}</version>
         </dependency>
+        -->
 
         <!-- aspectj the classes and aspects along with aspectjrt -->
         <dependency>
@@ -173,6 +182,35 @@
             <artifactId>commons-io</artifactId>
             <version>2.2</version>
         </dependency>
+
+
+		<!-- provided -->
+        <!--
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.el</groupId>
+			<artifactId>el-api</artifactId>
+			<version>2.2</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+			<scope>provided</scope>
+		</dependency>
+        -->
 
     </dependencies>
     <pluginRepositories>
@@ -348,9 +386,9 @@
                 <version>9.4.27.v20200227</version>
                 <configuration>
                     <jvmArgs>-Xmx4096m</jvmArgs>
-                    <webAppConfig>
+                    <webApp>
                         <contextPath>/${project.artifactId}</contextPath>
-                    </webAppConfig>
+                    </webApp>
                     <scanIntervalSeconds>5</scanIntervalSeconds>
                     <!-- jetty:run-forked -->
                     <jvmArgs>

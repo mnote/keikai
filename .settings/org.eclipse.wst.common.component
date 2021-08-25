@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="keikai">
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/generated-sources/annotations"/>
+        <property name="context-root" value="keikai"/>
+        <property name="java-output-path" value="/keikai/target/classes"/>
+        <property name="component.exclusion.patterns" value="WEB-INF/classes/metainfo/**,WEB-INF/classes/builddef.lst,WEB-INF/classes/*.store,WEB-INF/classes/web/**,WEB-INF/classes/org/zkoss/chart/impl/**,WEB-INF/classes/org/zkoss/chart/init/**,WEB-INF/classes/org/zkoss/chart/lic/**,WEB-INF/classes/org/zkoss/chart/model/**,WEB-INF/classes/org/zkoss/chart/options3D/**,WEB-INF/classes/org/zkoss/chart/plotOptions/**,WEB-INF/classes/org/zkoss/chart/util/**,WEB-INF/classes/org/zkoss/chart/*.class,WEB-INF/classes/org/zkoss/chart/rt/RuntimeInfo.class,%regex[WEB-INF/classes/org/zkoss/chart/rt/(?!Runtime).*.class],WEB-INF/classes/org/zkoss/zk/**,WEB-INF/classes/org/zkoss/zkex/bind/**,WEB-INF/classes/org/zkoss/zkex/init/**,WEB-INF/classes/org/zkoss/zkex/license/**,WEB-INF/classes/org/zkoss/zkex/theme/**,WEB-INF/classes/org/zkoss/zkex/ui/**,WEB-INF/classes/org/zkoss/zkex/util/**,WEB-INF/classes/org/zkoss/zkex/xml/**,WEB-INF/classes/org/zkoss/zkex/zul/**,WEB-INF/classes/org/zkoss/zkex/*.class,%regex[WEB-INF/classes/org/zkoss/zkex/rt/(?!Runtime).*.class],WEB-INF/classes/io/keikaiex/api/**,WEB-INF/classes/io/keikaiex/app/**,WEB-INF/classes/io/keikaiex/formula/**,WEB-INF/classes/io/keikaiex/init/**,WEB-INF/classes/io/keikaiex/license/**,WEB-INF/classes/io/keikaiex/model/**,WEB-INF/classes/io/keikaiex/ui/**,WEB-INF/classes/io/keikaiex/util/**,WEB-INF/classes/io/keikaiex/xml/**,WEB-INF/classes/io/keikaiex/*.class,WEB-INF/classes/io/keikaiex/rt/RuntimeInfo.class,%regex[WEB-INF/classes/io/keikaiex/rt/(?!Runtime).*.class]"/>
+    </wb-module>
+</project-modules>
